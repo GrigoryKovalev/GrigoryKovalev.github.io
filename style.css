@@ -1,0 +1,223 @@
+/* Text font */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,700|Roboto+Condensed:400,700|Roboto+Mono:400,600|Roboto+Slab:400,600&subset=cyrillic,latin);
+
+body {
+	font-family: 'Roboto', Arial, sans-serif; /* Text font */
+	font-size: 140%; /* Font size */ /* Text */
+	background: rgb(255, 255, 255) repeat center center fixed; /* Background */
+	background-size: cover;
+	padding: 0; 
+	margin: 0;
+}
+
+body.condensed {
+	font-family: 'Roboto Condensed', Arial, sans-serif; /* Text font */
+}
+
+body.mono {
+	font-family: 'Roboto Mono', Arial, sans-serif; /* Text font */
+}
+
+body.slab {
+	font-family: 'Roboto Slab', Arial, sans-serif; /* Text font */
+}
+
+body.dark {
+	background-color: rgb(15, 15, 15); /* Background */
+}
+
+body.dark.background {
+	background: url(background.jpg) repeat center center fixed; /* Background */
+	background-size: cover;
+	background-color: rgb(15, 15, 15);
+}
+
+.main {
+	color: black; /* Font color */ /* Text */
+	background-color: rgba(255, 255, 255, 0.5);
+	
+	max-width: 390px; /* Card width = width + 60px (padding left and right). Change with the `.head .round {max-height: 330px;}` */
+	width: 100%;
+	margin: auto;
+	text-align: center;
+	height: calc(100vh);
+	display: table;
+	vertical-align: middle;
+}
+
+body.dark .main {
+	color: white; /* Dark theme font color */ /* Text */
+	background-color: rgba(15, 15, 15, 0.5);
+}
+
+.vcard {
+	max-width: inherit;
+	padding: 30px;
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.vcard a, 
+.vcard a:link, 
+.vcard a:visited, 
+.vcard a:hover, 
+.vcard a:active {
+	color: black; /* Font color */ /* Links */
+	text-decoration: none;
+}
+
+body.dark .vcard a,
+body.dark .vcard a:link, 
+body.dark .vcard a:visited, 
+body.dark .vcard a:hover, 
+body.dark .vcard a:active {
+	color: white; /* Dark theme font color */ /* Links */
+}
+		
+.head {
+	position: relative;
+}
+
+.head .round {
+	width: 100%;
+	max-height: 330px;
+	border-radius: 50%;
+	overflow-y: auto; 	
+	-ms-overflow-style: none; 
+	scrollbar-width: none; 
+	overflow: -moz-scrollbars-none;
+}
+
+.head .round::-webkit-scrollbar {
+	width: 0px; 
+	height: 0px; 
+	background: transparent;
+}
+
+.head .round.text {
+	background-color: rgba(15, 15, 15, 0.1);
+}
+
+body.dark .head .round.text {
+	background-color: rgba(255, 255, 255, 0.1);
+	color: white; /* Dark theme font color */ /* Note */
+}
+
+.head .note {
+	display: block;
+	padding: 45px;
+	font-size: 75%; /* Font size */ /* Note */
+}
+
+.head img.qrcode {
+	padding: 45px;
+	background-color: rgb(255, 255, 255);
+}
+
+.head .vcard-link, 
+.head .qrcode-link, 
+.head .note-link, 
+.head .url {
+	position: absolute; 
+	cursor: pointer;
+}
+		
+.head .vcard-link, .head .qrcode-link {
+	top: 0;
+	padding-bottom: 10px;
+}
+
+.head .vcard-link {
+	left: 0;
+	padding-right: 10px;
+}
+
+.head .qrcode-link {
+	right: 0;
+	padding-left: 10px;
+}
+
+.head .note-link, .head .url {
+	bottom: 0;
+	padding-top: 10px;
+}
+
+.head .note-link {
+	left: 0;
+	padding-right: 10px;
+}
+
+.head .url {
+	right: 0;
+	padding-left: 10px;
+}
+
+.vcard h1 {
+	font-family: inherit;
+	font-size: 150%; /* Font size */ /* Name */
+	font-weight: inherit;
+	padding-bottom: 15px;
+	max-width: inherit;
+	
+}
+
+.vcard h1.name-border {
+	border-bottom: 2px solid red;
+}
+
+.vcard h1 span[data-toggle] { 
+	cursor: pointer;
+}
+
+.vcard h1 small {
+	display: block;
+	font-size: 50%; /* Font size */ /* Nickname */
+	color: #8a8a8a; /* Font color */ /* Nickname */
+	line-height: 1.5;
+}
+
+body.dark .vcard h1 small {
+	color: #cacaca; /* Dark theme font color */ /* Nickname */
+}
+
+.vcard .head + h1.name {
+	margin-top: 15px;
+}
+
+.vcard h1 + div {
+	margin-top: 15px;
+}
+
+.vcard > div + div {
+	margin-top: 5px;
+}
+
+.vcard .social a {
+	display: inline-block;
+	margin: 15px 7px 0 7px;
+}
+
+.vcard .social a:not([href]) {
+	cursor: inherit;
+}
+
+@media all and (max-width: 639px) {
+	body > div {
+		display: block;
+		background: rgba(255, 255, 255, 0.5);
+		width: 100%;
+		height: calc(100vh);
+	}
+	
+	body.dark > div {
+		background: rgba(15, 15, 15, 0.5);
+	}
+	
+	.main, body.dark .main {
+		background: none; 
+	}
+
+	.main .vcard {
+		vertical-align: top;
+	}
+} 
