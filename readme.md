@@ -1,1 +1,1 @@
-https://github.com/GrigoryKovalev/online-business-card
+https://grigorykovalev.github.io
