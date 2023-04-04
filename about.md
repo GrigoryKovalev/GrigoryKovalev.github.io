@@ -1,9 +1,3 @@
----
-layout: page
-title: About
-permalink: /about/
----
-
 # Online business card
 
 > Смотрите также [документацию на Русском](readme.ru.md) 👀.
