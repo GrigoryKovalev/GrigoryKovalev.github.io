@@ -1,4 +1,47 @@
-$(function () {		
+$(function () {	
+	// Change theme by hash from url
+
+	let changeTheme = () => {
+		if (window.location.hash) {
+			let isChanged = false,
+				hashes = window.location.hash.split('.').splice(0, 10),
+				classes = [
+					'classic', 'dark', 'background', 'condensed', 'mono', 'slab'
+			];
+
+			$('body').attr('class', '');
+								
+			$.each(hashes, function(name, value) {	
+				value = value.trim().replace(/^#/, '');
+			
+				if (classes.includes(value)) {
+					$('body').addClass(value);
+					
+					isChanged = true;
+				}
+			});
+			
+			if (hashes.includes('classic')) {
+				$('#round').css('width', '');	
+			} else {
+				$('#round').css('width', '');			
+			}
+			
+			$('#round').css('width', $('#round').width());
+			$('#round').css('height', $('#round').width());
+			
+			if (isChanged && $('.to-index').length) {
+				$('.to-index').attr('href', $('.to-index').attr('href').replace(/#.*/, '') +  hashes.join('.'))
+			}
+			
+			return isChanged;
+		}
+		
+		return false;
+	};
+	
+	let isChanged = changeTheme();
+
 	// Make avatar image height equal to width
 		
 	$('#round').css('width', $('#round').width());
@@ -7,6 +50,16 @@ $(function () {
 	$(window).resize(function() {
 		$('#round').css('width', '100%');
 		$('#round').css('height', $('#round').width());
+	});
+
+	$('#avatar').on('click', function() {
+		if ($('#avatar').height() > $('#round').height()) {
+			$('#avatar').css('height', '100%');
+			$('#avatar').css('width', 'auto');
+		} else {
+			$('#avatar').css('width', '100%');
+			$('#avatar').css('height', 'auto');
+		}
 	});
 	
 	// Show QR code link if it exists
@@ -25,31 +78,16 @@ $(function () {
 	});
 
 	// Get vCard data
-	$.get($('#vcard-link').attr('href'), function( data ) {	
+	$.get($('#vcard-link').attr('href'), function( data ) {		
 		let vcard = {},
 		
 			// Social profile IDs 
 			socials = [
-				'WhatsApp', 
-				'Telegram',
-				'Viber',
-				'VK',
-				'Facebook',
-				'Instagram',
-				'Twitter',
-				'Flickr',
-				'LinkedIn',
-				'GitHub',
+				'WhatsApp', 'Telegram', 'Viber', 'VK', 'Facebook', 'Instagram', 'Twitter', 'Flickr', 'LinkedIn', 'GitHub',
 			],
 			
 			fields = [
-				'FN', 
-				'NICKNAME', 
-				'ORG', 
-				'EMAIL', 
-				'TEL', 
-				'URL',  
-				'NOTE',
+				'FN', 'NICKNAME', 'ORG', 'EMAIL', 'TEL', 'URL', 'NOTE',
 			].concat(socials);
 			
 		// Prepare data				
@@ -91,13 +129,19 @@ $(function () {
 			
 			if (vcard.fn) {
 				$('#fn').text(vcard.fn);
-				$('title').text(vcard.fn);
+
+				if (!$('title').text()) {
+					$('title').text(vcard.fn);
+				}
 			}
 			
 			if (vcard.org) {
 				if (!vcard.fn && !vcard.nickname) {
 					$('#fn').text(vcard.org);
-					$('title').text(vcard.org);
+					
+					if (!$('title').text()) {
+						$('title').text(vcard.org);
+					}
 				} else {
 					$('#org').text(vcard.org).removeClass('is-hidden');
 				}
@@ -106,7 +150,10 @@ $(function () {
 			if (vcard.nickname) {
 				if (!vcard.fn) {
 					$('#fn').text(vcard.nickname).removeAttr('data-toggle');
-					$('title').text(vcard.nickname);
+					
+					if (!$('title').text()) {
+						$('title').text(vcard.nickname);
+					}
 				} else if (!vcard.org) {
 					$('#fn').removeAttr('data-toggle');
 					$('#org').text(vcard.nickname).removeClass('is-hidden');
@@ -142,7 +189,7 @@ $(function () {
 		if (vcard.url) {
 			$('#url').attr('href', '//' + vcard.url).removeClass('is-hidden');
 
-			if (vcard.url.search(new RegExp('^' + document.location.host + '\/?$')) !== -1) {
+			if (vcard.url.search(new RegExp('' + document.location.host + '(\/|$)')) !== -1) {
 				$('#url').removeAttr('target');
 			}
 		}
@@ -196,7 +243,45 @@ $(function () {
 				
 				$id.removeClass('is-hidden');
 			});	
-		}			
+		}	
+		
+		// Example
+		
+		if (window.location.pathname.search(/\/(about|example)\//) != -1) {
+			let isAbout = window.location.pathname.search(/\/about\//) != -1 ? true : false;
+		
+			$('.vcard').prepend($('<select>', {style: 'margin-bottom: 30px; border-radius: 3px;)'}).on('change', function() {
+				window.location.href = this.value;
+				
+				changeTheme();
+			}));
+			
+			let pathname = window.location.pathname.replace(/^.*\/([^\/]*)/, "$1"),
+				files = {
+				'Classic': ['index.classic.html', 'index.classic.background.html', 'index.classic.dark.html', 'index.classic.dark.background.html'],
+				'Roboto': ['index.html', 'index.background.html', 'index.dark.html', 'index.dark.background.html'],
+				'Roboto Condensed': ['index.condensed.html', 'index.condensed.background.html', 'index.condensed.dark.html', 'index.condensed.dark.background.html'],
+				'Roboto Mono': ['index.mono.html', 'index.mono.background.html', 'index.mono.dark.html', 'index.mono.dark.background.html'],
+				'Roboto Slab': ['index.slab.html', 'index.slab.background.html', 'index.slab.dark.html', 'index.slab.dark.background.html'],
+			};
+
+			if (isChanged) {
+				pathname = window.location.hash.replace('#', '');
+			}
+			
+			if (!pathname) {
+				pathname = (isAbout) ? 'index.condensed.dark.background.html' : 'index.html';
+			}
+
+			$.each(files, function(group, values) {	
+				let $optgroup = $('<optgroup>', {label: group});
+			
+				$.each(values, function(index, value) {
+					$optgroup.append($('<option>', {value: (isAbout ? '#' : '') + value, text: value, selected: value === pathname ? true : false}));
+				});
+				
+				$('.vcard select').append($optgroup);
+			});
+		}		
 	});
 });
-
