@@ -2,5 +2,6 @@ User-agent: *
 Disallow: /
 Allow: /online-business-card/
 Allow: /sitemap.xml
+Allow: /favicon.icon
 
 Sitemap: https://grigorykovalev.github.io/sitemap.xml
