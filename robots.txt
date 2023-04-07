@@ -1,5 +1,6 @@
 User-agent: *
 Disallow: /
 Allow: /online-business-card/about/
+Allow: /sitemap.xml
 
 Sitemap: https://grigorykovalev.github.io/sitemap.xml
