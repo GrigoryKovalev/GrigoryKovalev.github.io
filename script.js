@@ -41,25 +41,22 @@ $(function () {
 	};
 	
 	let isChanged = changeTheme();
+	
+	window.addEventListener('hashchange', function(e) {
+		changeTheme();
+	});
 
 	// Make avatar image height equal to width
 		
-	$('#round').css('width', $('#round').width());
-	$('#round').css('height', $('#round').width());
+	$('#round').css('width', $('#round').width()).css('height', $('#round').width());
 	
 	$(window).resize(function() {
-		$('#round').css('width', '100%');
-		$('#round').css('height', $('#round').width());
+		$('#round').css('width', '').css('height', '')
+			.css('width', $('#round').width()).css('height', $('#round').width());
 	});
 
 	$('#avatar').on('click', function() {
-		if ($('#avatar').height() > $('#round').height()) {
-			$('#avatar').css('height', '100%');
-			$('#avatar').css('width', 'auto');
-		} else {
-			$('#avatar').css('width', '100%');
-			$('#avatar').css('height', 'auto');
-		}
+		$('#avatar').toggleClass('full');
 	});
 	
 	// Show QR code link if it exists
